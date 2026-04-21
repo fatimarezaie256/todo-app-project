@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Todo</title>
+</head>
+<body>
+
+<h1>Add Todo</h1>
+
+<form method="POST" action="/todos">
+    @csrf
+    <input type="text" name="todo" placeholder="Enter todo">
+    <button type="submit">Add</button>
+</form>
+
+</body>
+</html>
