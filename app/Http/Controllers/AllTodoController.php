@@ -17,10 +17,10 @@ class AllTodoController extends Controller
     public function store(Request $request)
     {
         Todo::create([
-            'title' => $request->title
+            'todo' => $request->todo
         ]);
 
-        return redirect('/todos'); // 👉 go to list page
+        return redirect('/todos'); 
     }
 
     // Show all todos
@@ -28,6 +28,20 @@ class AllTodoController extends Controller
     {
         $todos = Todo::all();
         return view('todos.index', compact('todos'));
+    }
+
+    public function update(string $id,Request $request){
+         $todo = Todo::findOrFail($id);
+         $todo->update([
+            "todo"=>$request->todo,
+         ]);
+         $todo->save();
+        
+    }
+
+    public function delete(string $id){
+       $todo = Todo::findOrFail($id);
+       $todo->delete();
     }
  
     

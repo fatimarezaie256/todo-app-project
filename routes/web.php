@@ -7,6 +7,6 @@ Route::get('/', function () {
 });
 use App\Http\Controllers\TodoController;
 
-Route::get('/', [AllTodoController::class, 'store']);   // form page
-Route::post('/todos', [AllTodoController::class, 'store']); // insert
-Route::get('/todos', [AllTodoController::class, 'index']);  // list page
+Route::get('/', [AllTodoController::class, 'create']);   // form page
+Route::post('/create', [AllTodoController::class, 'store']); // insert
+Route::get('/alltodo', [AllTodoController::class, 'index']);  // list page
