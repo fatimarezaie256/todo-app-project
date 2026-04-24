@@ -7,42 +7,52 @@ use Illuminate\Http\Request;
 
 class AllTodoController extends Controller
 {
-   // Show form page
-    public function create()
-    {
-        return view('todos.create');
-    }
-
-    // Insert todo
-    public function store(Request $request)
-    {
-        Todo::create([
-            'todo' => $request->todo
-        ]);
-
-        return redirect('/todos'); 
-    }
-
-    // Show all todos
+    
     public function index()
     {
         $todos = Todo::all();
         return view('todos.index', compact('todos'));
     }
 
-    public function update(string $id,Request $request){
-         $todo = Todo::findOrFail($id);
-         $todo->update([
-            "todo"=>$request->todo,
-         ]);
-         $todo->save();
-        
+    public function store(Request $request)
+    {
+        $request->validate([
+            'todo' => 'required'
+        ]);
+
+        Todo::create([
+            'todo' => $request->todo
+        ]);
+
+        return redirect()->route('todos.index');
     }
 
-    public function delete(string $id){
-       $todo = Todo::findOrFail($id);
-       $todo->delete();
+    public function edit(string $id)
+    {
+        $todo = Todo::findOrFail($id);
+        return view('todos.edit', compact('todo'));
     }
- 
-    
+
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'todo' => 'required'
+        ]);
+
+        $todo = Todo::findOrFail($id);
+
+        $todo->update([
+            'todo' => $request->todo,
+        ]);
+
+        return redirect()->route('todos.index');
+    }
+
+    public function destroy(string $id)
+    {
+        $todo = Todo::findOrFail($id);
+        $todo->delete();
+
+        return redirect()->route('todos.index');
+    }
 }
