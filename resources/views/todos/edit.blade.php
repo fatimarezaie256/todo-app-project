@@ -2,55 +2,158 @@
 <html>
 <head>
     <title>Edit Todo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .main-container {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(to bottom right, #064e3b, #15803d, #65a30d);
+            color: white;
+        }
+
+        .background-image {
+            position: absolute;
+            inset: 0;
+            background: url('/images/r.png') center/cover no-repeat;
+            opacity: 0.2;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .edit-box {
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            padding: 40px;
+           background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .todo-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            text-align: center;
+            color: #166534;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-bottom: 25px;
+        }
+
+        .todo-input:focus {
+            outline: none;
+            border-color: #22c55e;
+            box-shadow: 0 0 0 2px rgba(34,197,94,0.3);
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .update-btn,
+        .back-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .update-btn {
+            background: #15803d;
+        }
+
+        .update-btn:hover {
+            background: #166534;
+        }
+
+        .back-btn {
+            background: rgba(29, 78, 216, 0.8);
+        }
+
+        .back-btn:hover {
+            background: rgba(30, 64, 175, 0.9);
+        }
+    </style>
 </head>
-<body class="">
 
-   <div class="relative min-h-screen overflow-hidden bg-gradient-to-br from-emerald-900 via-green-700 to-lime-600 text-white">
-        <div class="absolute inset-0 bg-[url('/images/r.png')] bg-cover bg-center opacity-20"></div>
-        <div class="absolute inset-0 bg-black/40"></div>
-        <div class="relative z-10">
-            <!-- <div class="bg-emerald-800/50 backdrop-blur-md fixed w-full top-0">
-                <h1 class="text-center text-2xl font-bold p-5">
-                    Update Todo
-                </h1>
-            </div> -->
-            <div class="flex items-center justify-center flex-col mt-32">
-         <div class="bg-transparent border border-gray-400 rounded-2xl p-8 w-full max-w-lg mt-20 flex flex-col items-center justify-center">
+<body>
 
-        <form action="{{ route('todos.update', $todo->id) }}" method="POST" class="">
-            @csrf
-            @method('PUT')
-                <h1 class="text-center text-2xl font-bold pb-8">
-                    Update Todo
-                </h1>
-            <input
-                type="text"
-                name="todo"
-                value="{{ $todo->todo }}"
-                class="w-full border text-center border-gray-400 py-2 px-20 text-green-800 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 mb-5"
-            >
+<div class="main-container">
 
-            <div class="flex flex-col gap-6">
-                <button
-                    type="submit"
-                    class="bg-green-700 w-full hover:bg-green-800/80 text-white px-10 py-2 rounded-lg"
+    <div class="background-image"></div>
+    <div class="overlay"></div>
+
+    <div class="content">
+
+        <div class="edit-box">
+
+            <form action="{{ route('todos.update', $todo->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <h1 class="title">Update Todo</h1>
+
+                <input
+                    type="text"
+                    name="todo"
+                    value="{{ $todo->todo }}"
+                    class="todo-input"
                 >
-                    Update
-                </button>
 
-                <a
-                    href="{{ route('todos.index') }}"
-                    class="bg-blue-700/80 w-full hover:bg-blue-800/60 text-white text-center px-10 py-2 rounded-lg"
-                >
-                    Back
-                </a>
-            </div>
-        </form>
+                <div class="button-group">
 
-    </div></div>
+                    <button type="submit" class="update-btn">
+                        Update
+                    </button>
+
+                    <a href="{{ route('todos.index') }}" class="back-btn">
+                        Back
+                    </a>
+
+                </div>
+            </form>
+
         </div>
 
-</body>
+    </div>
+
+</div>
 </html>
- 

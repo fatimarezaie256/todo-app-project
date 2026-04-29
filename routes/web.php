@@ -21,3 +21,6 @@ Route::put('/todo/{id}', [AllTodoController::class, 'update'])->name('todos.upda
 
 // Delete todo
 Route::delete('/todo/{id}', [AllTodoController::class, 'destroy'])->name('todos.destroy');
+
+Route::patch('/todos/{id}/complete', [AllTodoController::class, 'complete'])
+    ->name('todos.complete');

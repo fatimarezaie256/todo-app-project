@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class AllTodoController extends Controller
 {
-    
+
     public function index()
     {
         $todos = Todo::all();
@@ -26,6 +26,18 @@ class AllTodoController extends Controller
 
         return redirect()->route('todos.index');
     }
+     
+public function complete(Request $request, $id)
+{
+    $todo = Todo::findOrFail($id);
+
+    $todo->completed = $request->completed;
+    $todo->save();
+
+    return response()->json([
+        'success' => true
+    ]);
+}
 
     public function edit(string $id)
     {
